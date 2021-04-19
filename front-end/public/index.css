@@ -1,0 +1,55 @@
+:root {
+  --primaryGreen: #687864;
+  --primaryBlue: #173542;
+  --secondaryBlue: #31708e;
+  --secondaryBlue-2: #5085a5;
+  --backgroundColor: #f7f9fb;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body, html {
+  min-height: 100% !important;
+  height: 100%;
+}
+
+/* Mobile Styles */
+@media only screen and (max-width: 600px) {
+  html {
+    font-size: 1rem;
+  }
+}
+
+/* Tablet Styles */
+@media only screen and (min-width: 601px) and (max-width: 1060px) {
+  html {
+    font-size: 1.2rem;
+  }
+}
+
+/* Desktop Styles */
+@media only screen and (min-width: 1061px) {
+  html {
+    font-size: 1.4rem;
+  }
+}
+
+.btn-primary {
+  background-color: var(--primaryGreen) !important;
+  border-color: var(--primaryGreen) !important;
+}
+
+.btn-outline-primary {
+  color: var(--primaryGreen) !important;
+  border-color: var(--primaryGreen) !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--secondaryBlue) !important;
+  color: white !important;
+}
