@@ -59,7 +59,7 @@ const User = mongoose.model("User", userSchema);
 const validateUser = async (req, res, next) => {
   if (!req.session.userID)
     return res.status(403).send({
-      message: "not logged in"
+      message: "not logged in erro 1"
     });
 
   try {
@@ -68,14 +68,14 @@ const validateUser = async (req, res, next) => {
     });
     if (!user) {
       return res.status(403).send({
-        message: "not logged in"
+        message: "not logged in erro 2"
       });
     }
     
     req.user = user
   } catch {
     return res.status(403).send({
-      message: "not logged in"
+      message: "not logged in erro 3"
     });
   }
 
@@ -99,11 +99,12 @@ router.post('/register', async (req, res) => {
       username: req.body.username,
       password: req.body.password,
       email: req.body.email,
-      gender: req.body.gender
+      gender: req.body.gender,
+      role: req.body.role,
     });
-
     await user.save();
-    req.session.userId = user._id;
+
+    req.session.userID = user._id;
     return res.send({ user: user });
 
   } catch (error) {
@@ -131,7 +132,7 @@ router.post('/login', async (req, res) => {
         message: "username or password is wrong"
       });
 
-    req.session.userID = (await user)._id;
+    req.session.userID = user._id;
     return res.send({ user: user });
 
   } catch (err) {
