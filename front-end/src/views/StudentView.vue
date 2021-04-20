@@ -4,17 +4,38 @@
       <h1 class="title">My Account</h1>
       <div class="d-flex flex-column">
         <div class="student-info">
-          <h4>Name: {{ currentUser.firstName }} {{ currentUser.lastName }}</h4>
-          <h4>Email: {{ currentUser.email }}</h4>
-          <h4>Gender: {{ currentUser.gender }}</h4>
+          <h4>
+            Name: {{ studentInfo.student && studentInfo.student.firstName }}
+            {{ studentInfo.student && studentInfo.student.lastName }}
+          </h4>
+          <h4>Email: {{ studentInfo.student && studentInfo.student.email }}</h4>
+          <h4>
+            Gender: {{ studentInfo.student && studentInfo.student.gender }}
+          </h4>
           <TeacherInfo
             v-if="teacher"
             :teacher="teacher"
             :student="studentInfo"
           />
-          <button class="btn btn-outline-secondary" @click="submit">
-            Edit Personal Info
+          <button
+            class="btn btn-outline-primary"
+            v-if="!areEditing"
+            @click="toggleAreEditing"
+          >
+            Edit Info
           </button>
+          <button
+            class="btn btn-outline-primary"
+            v-if="areEditing"
+            @click="toggleAreEditing"
+          >
+            Hide Edit Info
+          </button>
+          <EditPersonalInfo
+            v-if="areEditing && studentInfo"
+            :student="studentInfo"
+            @updated="updateData"
+          />
         </div>
         <div class="mt-5">
           <AssignTeacher v-if="!teacher" @setTeacher="setStudentTeacher" />
@@ -36,20 +57,21 @@
 import axios from "axios";
 import AssignTeacher from "../components/StudentView/AssignTeacher";
 import TeacherInfo from "../components/StudentView/TeacherInfo";
-import EditStudent from "../components/Dashboard/Students/EditStudent";
+import EditPersonalInfo from "../components/StudentView/EditPersonalInfo";
 
 export default {
   name: "StudentView",
   components: {
     AssignTeacher,
     TeacherInfo,
-    EditStudent,
+    EditPersonalInfo,
   },
   data() {
     return {
       teacher: "",
       currentUser: {},
       studentInfo: {},
+      areEditing: false,
     };
   },
   async created() {
@@ -87,8 +109,13 @@ export default {
         this.studentInfo = {};
       }
     },
-    editStudent(student) {
-      this.$router.push({ name: "EditStudent", query: { id: student._id } });
+    toggleAreEditing() {
+      this.areEditing = !this.areEditing;
+    },
+    async updateData() {
+      await this.getStudentTeacher();
+      await this.getStudent();
+      this.areEditing = !this.areEditing;
     },
   },
 };
