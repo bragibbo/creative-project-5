@@ -9,7 +9,8 @@
           </button>
         </div>
       </div>
-      <Dashboard v-if="user"/>
+      <Dashboard v-if="user && user.role==='teacher'"/>
+      <StudentView v-else-if="user"/>
       <LandingPage v-else />
     </div>
   </div>
@@ -19,11 +20,13 @@
 import axios from 'axios'
 import Dashboard from './views/Dashboard'
 import LandingPage from './views/LandingPage'
+import StudentView from './views/StudentView'
 
 export default {
   name: 'App',
   components: {
     Dashboard,
+    StudentView,
     LandingPage
   },
   computed: {

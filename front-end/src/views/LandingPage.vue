@@ -8,7 +8,7 @@
       </div>
       
       <div class="mt-4 content-footer">
-        <p>Created by Brayden Gibbons and Nathan Sirrine. View the code for this project on <a href="https://github.com/bragibbo/creative-project-4">Github</a>.</p>
+        <p>Created by Brayden Gibbons and Nathan Sirrine. View the code for this project on <a href="https://github.com/bragibbo/creative-project-5">Github</a>.</p>
       </div>
   </div>
 </template>

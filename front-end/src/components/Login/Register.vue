@@ -23,6 +23,16 @@
             <label class="form-check-label" for="female">Female</label>
           </div>
         </div>
+        <div class="mt-3 d-flex flex-row justify-content-center">
+          <div class="mx-3 form-check">
+            <input class="form-check-input" v-model="role" type="radio" id="teacher" name="teacher" v-bind:value="'teacher'">
+            <label class="form-check-label" for="male">Teacher</label>
+          </div>
+          <div class="mx-3 form-check">
+            <input class="form-check-input" v-model="role" type="radio" id="student" name="student" v-bind:value="'student'">
+            <label class="form-check-label" for="female">Student</label>
+          </div>
+        </div>
         <button class="my-4 btn btn-primary" type="submit">Register</button>
       </form>
     </div>
@@ -48,6 +58,7 @@ export default {
       gender: '',
       error: '',
       errorLogin: '',
+      role: '',
     }
   },
   methods: {
@@ -64,13 +75,22 @@ export default {
           password: this.password,
           gender: this.gender,
           email: this.email,
+          role: this.role,
         })
+        if(this.role === 'student') await this.newStudent()
         this.$root.$data.user = response.data.user
       } catch (error) {
         this.error = error.response.data.message;
         this.$root.$data.user = null;
       }
     },
+    async newStudent() {
+      try {
+        await axios.post('/api/students/new_student', {})
+      } catch (error) {
+        this.error = error.response.data.message;
+      }
+    }
   }
 }
 </script>
